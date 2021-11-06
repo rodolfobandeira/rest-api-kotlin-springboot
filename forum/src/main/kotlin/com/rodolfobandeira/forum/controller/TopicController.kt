@@ -6,9 +6,8 @@ import com.rodolfobandeira.forum.dto.UpdateTopicForm
 import com.rodolfobandeira.forum.service.TopicService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.util.UriBuilder
-import org.springframework.web.util.UriComponents
 import org.springframework.web.util.UriComponentsBuilder
 import javax.validation.Valid
 
@@ -28,6 +27,7 @@ class TopicController(private val service: TopicService) {
     }
 
     @PostMapping
+    @Transactional
     fun create(
         @RequestBody @Valid form: NewTopicForm,
         uriBuilder: UriComponentsBuilder
