@@ -8,6 +8,8 @@ import com.rodolfobandeira.forum.mapper.TopicFormMapper
 import com.rodolfobandeira.forum.mapper.TopicViewMapper
 import com.rodolfobandeira.forum.model.Topic
 import com.rodolfobandeira.forum.repository.TopicRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.*
 import java.util.stream.Collectors
@@ -20,10 +22,19 @@ class TopicService(
     private val notFoundMessage: String = "Topic not found"
 ) {
 
-    fun list(): List<TopicView> {
-        return repository.findAll().stream().map { t ->
+    fun list(
+        courseName: String?,
+        pagination: Pageable
+    ): Page<TopicView> {
+        val topics = if (courseName == null) {
+            repository.findAll(pagination)
+        } else {
+            repository.findByCourseName(courseName, pagination)
+        }
+
+        return topics.map { t ->
             topicViewMapper.map(t)
-        }.collect(Collectors.toList())
+        }
     }
 
     fun findById(id: Long): TopicView {

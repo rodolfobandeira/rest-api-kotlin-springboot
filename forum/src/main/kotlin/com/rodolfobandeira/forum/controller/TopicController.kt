@@ -4,6 +4,10 @@ import com.rodolfobandeira.forum.dto.NewTopicForm
 import com.rodolfobandeira.forum.dto.TopicView
 import com.rodolfobandeira.forum.dto.UpdateTopicForm
 import com.rodolfobandeira.forum.service.TopicService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
@@ -16,9 +20,12 @@ import javax.validation.Valid
 class TopicController(private val service: TopicService) {
 
     @GetMapping
-    fun list(): List<TopicView> {
+    fun list(
+        @RequestParam(required = false) courseName: String?,
+        @PageableDefault(size = 4, sort = ["created_at"], direction = Sort.Direction.DESC) pagination: Pageable
+    ): Page<TopicView> {
         // Receives "service" from the constructor in TopicController via dependency injection
-        return service.list()
+        return service.list(courseName, pagination)
     }
 
     @GetMapping("/{id}")
