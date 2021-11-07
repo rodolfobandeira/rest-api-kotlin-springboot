@@ -2,6 +2,7 @@ package com.rodolfobandeira.forum.service
 
 import com.rodolfobandeira.forum.dto.NewTopicForm
 import com.rodolfobandeira.forum.dto.TopicView
+import com.rodolfobandeira.forum.dto.TopicsByCategoryDto
 import com.rodolfobandeira.forum.dto.UpdateTopicForm
 import com.rodolfobandeira.forum.exception.NotFoundException
 import com.rodolfobandeira.forum.mapper.TopicFormMapper
@@ -13,19 +14,22 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.*
 import java.util.stream.Collectors
+import javax.persistence.EntityManager
 
 @Service
 class TopicService(
     private var repository: TopicRepository,
     private val topicViewMapper: TopicViewMapper,
     private val topicFormMapper: TopicFormMapper,
-    private val notFoundMessage: String = "Topic not found"
+    private val notFoundMessage: String = "Topic not found",
+    private val em: EntityManager
 ) {
 
     fun list(
         courseName: String?,
         pagination: Pageable
     ): Page<TopicView> {
+        print(em)
         val topics = if (courseName == null) {
             repository.findAll(pagination)
         } else {
@@ -62,5 +66,9 @@ class TopicService(
 
     fun delete(id: Long) {
         repository.deleteById(id)
+    }
+
+    fun report(): List<TopicsByCategoryDto> {
+        return repository.report()
     }
 }

@@ -57,6 +57,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<!-- This will create a cache in-memory just for dev mode -->
+			<artifactId>spring-boot-starter-cache</artifactId>
+			<!-- In production, we'd also need to include something like Redis, or Memcached packages -->
+		</dependency>
+
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
