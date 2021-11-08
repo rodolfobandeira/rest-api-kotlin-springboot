@@ -70,6 +70,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
@@ -96,7 +102,9 @@
 						<arg>-Xjsr305=strict</arg>
 					</args>
 					<compilerPlugins>
+						<plugin>all-open</plugin>
 						<plugin>spring</plugin>
+						<plugin>no-arg</plugin>
 						<plugin>jpa</plugin>
 					</compilerPlugins>
 				</configuration>
@@ -106,9 +114,33 @@
 						<artifactId>kotlin-maven-allopen</artifactId>
 						<version>${kotlin.version}</version>
 					</dependency>
+					<dependency>
+						<groupId>org.jetbrains.kotlin</groupId>
+						<artifactId>kotlin-maven-noarg</artifactId>
+						<version>${kotlin.version}</version>
+					</dependency>
 				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<activatedProperties>dev</activatedProperties>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+
+		<profile>
+			<id>prod</id>
+			<properties>
+				<activatedProperties>prod</activatedProperties>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>

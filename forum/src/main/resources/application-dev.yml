@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:forum
+    username: example
+    password: example
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    # If we're using resources/data.sql, enable the next line. If you're using Flyway, that isn't necessary.
+    # defer-datasource-initialization: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+
+jwt:
+  secret: fa5d245c-c3bb-411b-b5b6-aa0c952a32d0
+  expiration: 60000 # 60 seconds
