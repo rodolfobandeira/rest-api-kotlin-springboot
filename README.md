@@ -56,4 +56,21 @@ curl --location --request DELETE 'http://localhost:8080/topics/1' \
 }'
 ```
 
+---
 
+Useful commands:
+
+```
+mvn clean package
+mvn package
+
+heroku login
+heroku git:remote -a YOUR_PROJECT_HERE
+heroku create
+
+docker build -t forum -f Dockerfile .
+docker run -p 3080:8080 forum
+
+heroku container:push web
+heroku container:release web
+```
